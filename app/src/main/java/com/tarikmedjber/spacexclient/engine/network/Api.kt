@@ -2,6 +2,7 @@ package com.tarikmedjber.spacexclient.engine.network
 
 import com.tarikmedjber.spacexclient.engine.models.CompanyInfo
 import com.tarikmedjber.spacexclient.engine.models.Launches
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import retrofit2.http.GET
 
@@ -14,5 +15,5 @@ interface CompanyInfoService {
 
 interface LaunchesService {
     @GET("launches")
-    suspend fun getLaunches(): Response<Launches>
+    suspend fun getLaunches(): Response<List<Launches>>
 }

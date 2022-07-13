@@ -1,8 +1,6 @@
 package com.tarikmedjber.spacexclient.di
 
-import com.tarikmedjber.spacexclient.engine.network.ApiBuilder
-import com.tarikmedjber.spacexclient.engine.network.CompanyInfoService
-import com.tarikmedjber.spacexclient.engine.network.LaunchesService
+import com.tarikmedjber.spacexclient.engine.network.*
 import org.koin.dsl.binds
 import org.koin.dsl.module
 
@@ -11,4 +9,5 @@ val apiModule = module {
         CompanyInfoService::class,
         LaunchesService::class
     )
+    single<RequestExecutor> { RequestExecutorImpl() }
 }
