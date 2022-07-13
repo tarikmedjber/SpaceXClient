@@ -1,8 +1,8 @@
-package com.tarikmedjber.spacexclient
+package com.tarikmedjber.spacexclient.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.tarikmedjber.spacexclient.ui.main.MainFragment
+import com.tarikmedjber.spacexclient.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, HomeFragment.newInstance())
                 .commitNow()
         }
     }
