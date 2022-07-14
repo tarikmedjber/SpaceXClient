@@ -1,7 +1,9 @@
 package com.tarikmedjber.spacexclient.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.RadioButton
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.tarikmedjber.spacexclient.R
@@ -47,4 +49,32 @@ class HomeFragment : Fragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpFilterSection()
+    }
+
+    private fun setUpFilterSection() {
+        binding.filter.filterRadioGroup.setOnCheckedChangeListener { _, optionId ->
+            when (optionId) {
+                R.id.launch_date -> {
+                }
+                R.id.successful_launch -> {
+                }
+            }
+        }
+
+        binding.filter.sortRadioGroup.setOnCheckedChangeListener { _, optionId ->
+            when (optionId) {
+                R.id.ascending -> {
+                }
+                R.id.descending -> {
+                }
+            }
+
+        }
+
+    }
+
 }

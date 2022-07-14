@@ -7,35 +7,56 @@
     android:padding="@dimen/small_space"
     android:visibility="gone">
 
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/filter_radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:checkedButton="@+id/launch_date"
         android:orientation="horizontal">
 
         <RadioButton
+            android:id="@+id/launch_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
+            android:paddingStart="0dp"
+            android:paddingEnd="@dimen/small_space"
             android:text="@string/launch_date" />
 
         <RadioButton
+            android:id="@+id/successful_launch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/successful_launch" />
-    </LinearLayout>
 
-    <LinearLayout
+    </RadioGroup>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/medium_space" />
+
+    <RadioGroup
+        android:id="@+id/sort_radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:checkedButton="@+id/descending"
         android:orientation="horizontal">
 
         <RadioButton
+            android:id="@+id/descending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ascending" />
+            android:checked="true"
+            android:text="@string/descending" />
 
         <RadioButton
+            android:id="@+id/ascending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/descending" />
-    </LinearLayout>
+            android:paddingStart="0dp"
+            android:paddingEnd="@dimen/small_space"
+            android:text="@string/ascending" />
+
+
+    </RadioGroup>
 </LinearLayout>
