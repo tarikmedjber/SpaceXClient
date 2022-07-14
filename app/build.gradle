@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+
 }
 
 
@@ -62,6 +64,8 @@ dependencies {
     implementation "io.insert-koin:koin-android-compat:$koin_version"
     implementation "io.insert-koin:koin-androidx-workmanager:$koin_version"
     implementation "io.insert-koin:koin-androidx-navigation:$koin_version"
+    implementation "com.squareup.moshi:moshi-kotlin:1.13.0"
+
 
     /* Retrofit */
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"

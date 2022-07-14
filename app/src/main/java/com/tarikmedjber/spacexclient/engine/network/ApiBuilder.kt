@@ -1,5 +1,7 @@
 package com.tarikmedjber.spacexclient.engine.network
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tarikmedjber.spacexclient.BuildConfig.BASE_URL
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -11,7 +13,7 @@ object ApiBuilder {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(getHttpClient())
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(Api::class.java)
     }
@@ -25,4 +27,7 @@ object ApiBuilder {
         return okHttpBuilder.build()
     }
 
+    private val moshi: Moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
 }

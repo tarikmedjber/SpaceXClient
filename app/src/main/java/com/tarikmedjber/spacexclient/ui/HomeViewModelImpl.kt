@@ -12,6 +12,10 @@ import kotlinx.coroutines.launch
 class HomeViewModelImpl(private val spaceXRepository: SpaceXRepository) : ViewModel(),
     HomeViewModel {
 
+    init {
+        getCompanyInfo()
+    }
+
     override val companyInfoState = MutableLiveData<HomeViewModel.State>()
     override val launchesState = MutableLiveData<HomeViewModel.State>()
 

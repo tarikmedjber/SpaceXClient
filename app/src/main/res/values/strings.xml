@@ -5,5 +5,11 @@
     <string name="successful_launch">Successful Launch</string>
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
-
+    <string name="company_title">Company</string>
+    <string name="launches_title">Launches</string>
+    <string name="company_info">%s was founded by  %s in  %s. It has now  %s employees,  %s launch sites, and is valued at USD  %s</string>
+    <string name="error_text">Sorry, we can\'t load the company info at the moment</string>
+    <string name="try_again">Try Again</string>
+    <string name="cancel">Cancel</string>
+    <string name="refresh">Refresh</string>
 </resources>

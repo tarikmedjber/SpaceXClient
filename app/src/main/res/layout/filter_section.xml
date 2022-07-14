@@ -33,7 +33,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/medium_space" />
+        android:layout_height="@dimen/small_medium_space" />
 
     <RadioGroup
         android:id="@+id/sort_radio_group"

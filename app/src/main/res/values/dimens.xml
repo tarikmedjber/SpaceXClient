@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="small_text">14sp</dimen>
+    <dimen name="medium_text">18sp</dimen>
+    <dimen name="large_text">24sp</dimen>
 
     <dimen name="small_space">2dp</dimen>
     <dimen name="small_medium_space">4dp</dimen>
