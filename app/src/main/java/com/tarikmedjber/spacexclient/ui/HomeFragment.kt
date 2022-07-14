@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tarikmedjber.spacexclient.R
 import com.tarikmedjber.spacexclient.databinding.FragmentHomeBinding
+import com.tarikmedjber.spacexclient.utils.CurrencyFormatter.asCurrency
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -92,18 +93,16 @@ class HomeFragment : Fragment() {
                     val founded = homeViewModel.companyInfo?.founded
                     val employees = homeViewModel.companyInfo?.employees
                     val launchSites = homeViewModel.companyInfo?.launchSites
-                    val valuation = homeViewModel.companyInfo?.valuation
+                    val valuation = homeViewModel.companyInfo?.valuation?.asCurrency()
 
-                    binding.companyInfoText.setText(
-                        getString(
-                            R.string.company_info,
-                            companyName,
-                            founder,
-                            founded,
-                            employees,
-                            launchSites,
-                            valuation
-                        )
+                    binding.companyInfoText.text = getString(
+                        R.string.company_info,
+                        companyName,
+                        founder,
+                        founded,
+                        employees,
+                        launchSites,
+                        valuation
                     )
                 }
             }
