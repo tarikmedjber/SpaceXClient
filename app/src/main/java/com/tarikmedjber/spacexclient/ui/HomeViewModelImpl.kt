@@ -24,8 +24,8 @@ class HomeViewModelImpl(private val spaceXRepository: SpaceXRepository) : ViewMo
 
     override fun getCompanyInfo() {
         viewModelScope.launch {
-            spaceXRepository.getCompanyInfo().collect { companyInfo ->
-                companyInfoState.value = when (companyInfo) {
+            spaceXRepository.getCompanyInfo().collect { companyInfoData ->
+                companyInfoState.value = when (companyInfoData) {
                     is RequestState.Failure -> {
                         HomeViewModel.State.Error
                     }
@@ -33,6 +33,7 @@ class HomeViewModelImpl(private val spaceXRepository: SpaceXRepository) : ViewMo
                         HomeViewModel.State.Loading
                     }
                     is RequestState.Success -> {
+                        companyInfo = companyInfoData.data
                         HomeViewModel.State.Success
                     }
                 }

@@ -34,6 +34,18 @@ class HomeFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpFilterSection()
+        binding.refreshCompanyInfo.setOnClickListener {
+            getCompanyInfo()
+        }
+        homeViewModel.companyInfoState.observe(
+            viewLifecycleOwner,
+            companyInfoObserver
+        )
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.custom_menu, menu)
     }
@@ -52,22 +64,10 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setUpFilterSection()
-        binding.refreshCompanyInfo.setOnClickListener {
-            getCompanyInfo()
-        }
-        homeViewModel.companyInfoState.observe(
-            viewLifecycleOwner,
-            companyInfoObserver
-        )
-    }
-
     private fun getCompanyInfo() {
         homeViewModel.getCompanyInfo()
     }
-    
+
     private val companyInfoObserver =
         Observer<HomeViewModel.State> {
             when (it) {
@@ -82,10 +82,29 @@ class HomeFragment : Fragment() {
                     binding.companyInfoProgressBar.visibility = View.VISIBLE
                     binding.companyInfoText.visibility = View.GONE
                 }
-                HomeViewModel.State.Success -> {
+                is HomeViewModel.State.Success -> {
                     binding.refreshCompanyInfo.visibility = View.GONE
                     binding.companyInfoText.visibility = View.VISIBLE
                     binding.companyInfoProgressBar.visibility = View.GONE
+
+                    val companyName = homeViewModel.companyInfo?.name
+                    val founder = homeViewModel.companyInfo?.founder
+                    val founded = homeViewModel.companyInfo?.founded
+                    val employees = homeViewModel.companyInfo?.employees
+                    val launchSites = homeViewModel.companyInfo?.launchSites
+                    val valuation = homeViewModel.companyInfo?.valuation
+
+                    binding.companyInfoText.setText(
+                        getString(
+                            R.string.company_info,
+                            companyName,
+                            founder,
+                            founded,
+                            employees,
+                            launchSites,
+                            valuation
+                        )
+                    )
                 }
             }
         }
