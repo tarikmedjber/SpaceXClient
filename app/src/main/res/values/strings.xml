@@ -12,4 +12,11 @@
     <string name="try_again">Try Again</string>
     <string name="cancel">Cancel</string>
     <string name="refresh">Refresh</string>
+    <string name="company_info_error_desc">Error icon to be shown when company info fails</string>
+    <string name="launch_image">Launch image</string>
+    <string name="mission_info">Mission: %s</string>
+    <string name="launch_date_time_info">Date/time: %s at %s</string>
+    <string name="launch_rocket_info">Rocket: %s / %s</string>
+    <string name="launch_days_from_since">Days from now: + %s</string>
+    <string name="launch_success">Icon to show whether the launch was a success or not</string>
 </resources>

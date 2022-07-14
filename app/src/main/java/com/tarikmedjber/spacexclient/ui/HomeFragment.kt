@@ -73,40 +73,46 @@ class HomeFragment : Fragment() {
         Observer<HomeViewModel.State> {
             when (it) {
                 HomeViewModel.State.Error -> {
+                    binding.companyInfoErrorIcon.visibility = View.VISIBLE
                     binding.refreshCompanyInfo.visibility = View.GONE
                     binding.companyInfoText.visibility = View.GONE
                     binding.companyInfoProgressBar.visibility = View.GONE
                     showErrorDialog()
                 }
                 HomeViewModel.State.Loading -> {
+                    binding.companyInfoErrorIcon.visibility = View.GONE
                     binding.refreshCompanyInfo.visibility = View.GONE
                     binding.companyInfoProgressBar.visibility = View.VISIBLE
                     binding.companyInfoText.visibility = View.GONE
                 }
                 is HomeViewModel.State.Success -> {
+                    binding.companyInfoErrorIcon.visibility = View.GONE
                     binding.refreshCompanyInfo.visibility = View.GONE
                     binding.companyInfoText.visibility = View.VISIBLE
                     binding.companyInfoProgressBar.visibility = View.GONE
-
-                    val companyName = homeViewModel.companyInfo?.name
-                    val founder = homeViewModel.companyInfo?.founder
-                    val founded = homeViewModel.companyInfo?.founded
-                    val employees = homeViewModel.companyInfo?.employees
-                    val launchSites = homeViewModel.companyInfo?.launchSites
-                    val valuation = homeViewModel.companyInfo?.valuation?.asCurrency()
-
-                    binding.companyInfoText.text = getString(
-                        R.string.company_info,
-                        companyName,
-                        founder,
-                        founded,
-                        employees,
-                        launchSites,
-                        valuation
-                    )
+                    setCompanyInfoText()
                 }
             }
         }
+
+    private fun setCompanyInfoText() {
+        val companyName = homeViewModel.companyInfo?.name
+        val founder = homeViewModel.companyInfo?.founder
+        val founded = homeViewModel.companyInfo?.founded
+        val employees = homeViewModel.companyInfo?.employees
+        val launchSites = homeViewModel.companyInfo?.launchSites
+        val valuation = homeViewModel.companyInfo?.valuation?.asCurrency()
+
+        binding.companyInfoText.text = getString(
+            R.string.company_info,
+            companyName,
+            founder,
+            founded,
+            employees,
+            launchSites,
+            valuation
+        )
+    }
 
     private fun showErrorDialog() {
         context?.let {
@@ -117,6 +123,7 @@ class HomeFragment : Fragment() {
                 }
                 .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
                     binding.refreshCompanyInfo.visibility = View.VISIBLE
+                    binding.companyInfoErrorIcon.visibility = View.GONE
                     dialog.dismiss()
                 }
                 .show()
