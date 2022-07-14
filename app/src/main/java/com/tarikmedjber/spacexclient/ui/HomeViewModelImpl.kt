@@ -1,4 +1,4 @@
-package com.tarikmedjber.spacexclient.ui.main
+package com.tarikmedjber.spacexclient.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

@@ -5,8 +5,8 @@ import com.tarikmedjber.spacexclient.engine.models.CompanyInfo
 import com.tarikmedjber.spacexclient.engine.models.Launches
 import com.tarikmedjber.spacexclient.engine.network.RequestState
 import com.tarikmedjber.spacexclient.engine.repositories.SpaceXRepository
-import com.tarikmedjber.spacexclient.ui.main.HomeViewModel
-import com.tarikmedjber.spacexclient.ui.main.HomeViewModelImpl
+import com.tarikmedjber.spacexclient.ui.HomeViewModel
+import com.tarikmedjber.spacexclient.ui.HomeViewModelImpl
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.mockk

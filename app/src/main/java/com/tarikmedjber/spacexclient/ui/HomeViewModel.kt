@@ -1,4 +1,4 @@
-package com.tarikmedjber.spacexclient.ui.main
+package com.tarikmedjber.spacexclient.ui
 
 import androidx.lifecycle.LiveData
 import com.tarikmedjber.spacexclient.engine.models.CompanyInfo
@@ -19,4 +19,5 @@ interface HomeViewModel {
     val launchesState: LiveData<State>
     var launches: Launches?
     fun getLaunches()
+
 }
