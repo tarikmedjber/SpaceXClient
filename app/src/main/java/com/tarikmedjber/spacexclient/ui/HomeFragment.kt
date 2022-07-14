@@ -37,10 +37,10 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter -> {
-                if (binding.filterSection.isVisible) {
-                    binding.filterSection.visibility = View.GONE
+                if (binding.filter.filterSection.isVisible) {
+                    binding.filter.filterSection.visibility = View.GONE
                 } else {
-                    binding.filterSection.visibility = View.VISIBLE
+                    binding.filter.filterSection.visibility = View.VISIBLE
                 }
                 true
             }
