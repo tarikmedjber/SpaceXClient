@@ -5,11 +5,11 @@ import com.tarikmedjber.spacexclient.engine.models.CompanyInfo
 import com.tarikmedjber.spacexclient.engine.models.Launches
 import com.tarikmedjber.spacexclient.engine.network.RequestState
 import com.tarikmedjber.spacexclient.engine.repositories.SpaceXRepository
+import com.tarikmedjber.spacexclient.ui.FilteredOptions
 import com.tarikmedjber.spacexclient.ui.HomeViewModel
 import com.tarikmedjber.spacexclient.ui.HomeViewModelImpl
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.mockk
+import com.tarikmedjber.spacexclient.ui.OrderType
+import io.mockk.*
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -22,6 +22,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.ArgumentMatchers.any
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTests {
@@ -36,14 +37,17 @@ class HomeViewModelTests {
     private val spaceXRepository: SpaceXRepository = mockk()
 
     private val companyInfo: CompanyInfo = mockk()
-    private val launches: List<Launches> = mockk()
-
+    private val launches: List<Launches> = mockk(relaxed = true)
+    private val filteredOptions = FilteredOptions.LaunchSuccess(OrderType.Descending)
     private val failureMessage = "Failure Messages"
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
         Dispatchers.setMain(dispatcher)
+        coEvery { spaceXRepository.getCompanyInfo() } returns flow {
+            emit(RequestState.Failure(failureMessage))
+        }
         homeViewModel = HomeViewModelImpl(spaceXRepository)
     }
 
@@ -104,7 +108,7 @@ class HomeViewModelTests {
             emit(RequestState.Loading())
         }
         // And the view model calls the get launches method
-        homeViewModel.getLaunches()
+        homeViewModel.getLaunches(filteredOptions)
 
         // Then the current launches state should be of Loading
         val state = homeViewModel.launchesState.value
@@ -114,17 +118,38 @@ class HomeViewModelTests {
 
     @Test
     fun `Get launches should return success state when request is successful`() = runTest {
-        // Given the server returns a successful response with launches
+        // Given the list is not empty
+        every { launches.isEmpty() } returns false
+
+        // And the server returns a successful response with launches
         coEvery { spaceXRepository.getLaunches() } returns flow {
             emit(RequestState.Success(launches))
         }
         // And the view model calls the get launches method
-        homeViewModel.getLaunches()
+        homeViewModel.getLaunches(filteredOptions)
 
         // Then the current launches state should be of Success
         val state = homeViewModel.launchesState.value
         assertEquals(HomeViewModel.State.Success, state)
     }
+
+    @Test
+    fun `Get launches should return error state when request is Success but empty list`() =
+        runTest {
+            // Given the list is empty
+            every { launches.isEmpty() } returns true
+
+            // And the server returns a successful response with launches
+            coEvery { spaceXRepository.getLaunches() } returns flow {
+                emit(RequestState.Success(launches))
+            }
+            // And the view model calls the get launches method
+            homeViewModel.getLaunches(filteredOptions)
+
+            // Then the current launches state should be of Success
+            val state = homeViewModel.launchesState.value
+            assertEquals(HomeViewModel.State.Error, state)
+        }
 
     @Test
     fun `Get launches should return error state when request is Failure`() = runTest {
@@ -133,11 +158,10 @@ class HomeViewModelTests {
             emit(RequestState.Failure(failureMessage))
         }
         // And the view model calls the get launches method
-        homeViewModel.getLaunches()
+        homeViewModel.getLaunches(filteredOptions)
 
         // Then the current launches state should be of Error
         val state = homeViewModel.launchesState.value
         assertEquals(HomeViewModel.State.Error, state)
     }
-
 }
