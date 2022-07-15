@@ -58,7 +58,6 @@ class HomeViewModelImpl(private val spaceXRepository: SpaceXRepository) : ViewMo
                             launchesState.value = HomeViewModel.State.Error
                         } else {
                             filterLaunchesList(filteredOptions, launches.data)
-                            launchesState.value = HomeViewModel.State.Success
                         }
                     }
                 }

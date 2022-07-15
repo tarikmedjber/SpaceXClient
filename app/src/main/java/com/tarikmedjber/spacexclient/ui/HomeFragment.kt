@@ -118,7 +118,7 @@ class HomeFragment : Fragment(),
         homeViewModel.getCompanyInfo()
     }
 
-    private val companyInfoObserver =
+    val companyInfoObserver =
         Observer<HomeViewModel.State> {
             when (it) {
                 HomeViewModel.State.Error -> {
@@ -168,7 +168,7 @@ class HomeFragment : Fragment(),
         homeViewModel.getLaunches(currentFiltersSelected())
     }
 
-    private val launchesObserver =
+    val launchesObserver =
         Observer<HomeViewModel.State> {
             when (it) {
                 HomeViewModel.State.Error -> {
