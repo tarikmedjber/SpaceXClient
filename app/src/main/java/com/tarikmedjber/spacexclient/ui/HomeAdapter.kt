@@ -3,13 +3,15 @@ package com.tarikmedjber.spacexclient.ui
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.tarikmedjber.spacexclient.R
 import com.tarikmedjber.spacexclient.databinding.LaunchItemBinding
 import com.tarikmedjber.spacexclient.engine.models.Launches
+import com.tarikmedjber.spacexclient.utils.DateTimeFormatter.getDate
+import com.tarikmedjber.spacexclient.utils.DateTimeFormatter.getDaysSince
+import com.tarikmedjber.spacexclient.utils.DateTimeFormatter.getTime
 
 class HomeAdapter(
     private val listener: LaunchesViewHolder.OnLaunchListener,
@@ -50,15 +52,15 @@ class LaunchesViewHolder(
     }
 
     fun bind(launch: Launches, position: Int) {
-        // TODO -> extract time and date
         // TODO -> days since/ from
-//        DateTimeFormatter.ofPattern("")
-//        val date = launch.launchDate
-//        val time = launch.launchDate
+
+        val date = getDate(launch.launchDate)
+        val time = getTime(launch.launchDate)
+        val daysSinceLastLaunch = getDaysSince(launch.launchDate)
 
         binding.missionText.text = context.getString(R.string.mission_info, launch.missionName)
         binding.dateTimeText.text =
-            context.getString(R.string.launch_date_time_info, launch.launchDate, launch.launchDate)
+            context.getString(R.string.launch_date_time_info, date, time)
         binding.rocketText.text = context.getString(
             R.string.launch_rocket_info,
             launch.rocket.rocketName,
@@ -66,7 +68,7 @@ class LaunchesViewHolder(
         )
         binding.daysText.text = context.getString(
             R.string.launch_days_from_since,
-            10.toString()
+            daysSinceLastLaunch.toString()
         )
 
         Picasso
@@ -75,9 +77,19 @@ class LaunchesViewHolder(
             .into(binding.launchImage)
 
         if (launch.launchSuccess) {
-            binding.successIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_check))
+            binding.successIcon.setImageDrawable(
+                ContextCompat.getDrawable(
+                    context,
+                    R.drawable.ic_check
+                )
+            )
         } else {
-            binding.successIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_close))
+            binding.successIcon.setImageDrawable(
+                ContextCompat.getDrawable(
+                    context,
+                    R.drawable.ic_close
+                )
+            )
         }
     }
 

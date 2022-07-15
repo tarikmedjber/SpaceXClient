@@ -2,11 +2,13 @@ package com.tarikmedjber.spacexclient.ui
 
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout.HORIZONTAL
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tarikmedjber.spacexclient.R
 import com.tarikmedjber.spacexclient.databinding.FragmentHomeBinding
@@ -51,12 +53,8 @@ class HomeFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
-        homeAdapter = context?.let {
-            HomeAdapter(this, it)
-        }
-        binding.launchesList.adapter = homeAdapter
 
+        setUpLaunchesList()
         setUpFilterSection()
 
         binding.refreshCompanyInfo.setOnClickListener {
@@ -75,6 +73,22 @@ class HomeFragment : Fragment(),
         homeViewModel.launchesState.observe(
             viewLifecycleOwner,
             launchesObserver
+        )
+    }
+
+    private fun setUpLaunchesList() {
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        homeAdapter = context?.let {
+            HomeAdapter(this, it)
+        }
+        binding.launchesList.adapter = homeAdapter
+        binding.launchesList.layoutManager = layoutManager
+
+        binding.launchesList.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                layoutManager.orientation
+            )
         )
     }
 
