@@ -100,6 +100,10 @@ class LaunchesViewHolder(
                 )
             )
         }
+
+        binding.launchItem.setOnClickListener {
+            launchListener.onLaunchClicked(position)
+        }
     }
 
     companion object {

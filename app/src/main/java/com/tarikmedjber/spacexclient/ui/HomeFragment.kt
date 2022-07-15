@@ -1,9 +1,10 @@
 package com.tarikmedjber.spacexclient.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout.HORIZONTAL
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -250,8 +251,26 @@ class HomeFragment : Fragment(),
 
     }
 
+
     override fun onLaunchClicked(position: Int) {
-        // TODO -> open link
+        val links = homeViewModel.launchesList?.get(position)?.links
+        if (links != null) {
+            val linksList = arrayOf(links.articleLink, links.wikipediaLink, links.video_link)
+            openLinksDialog(linksList)
+        }
+    }
+
+    private fun openLinksDialog(linksList: Array<String>) {
+        context?.let {
+            AlertDialog.Builder(it).setTitle(getString(R.string.link_to_open_title))
+                .setItems(linksList) { dialog, which ->
+                    val browserIntent =
+                        Intent(Intent.ACTION_VIEW, Uri.parse(linksList[which]))
+                    startActivity(browserIntent)
+                    dialog.dismiss()
+                }.setCancelable(true)
+                .show()
+        }
     }
 
 }

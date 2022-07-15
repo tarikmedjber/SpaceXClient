@@ -7,5 +7,5 @@ data class Launches(
     @SerializedName("launch_date_utc") val launchDate: String,
     @SerializedName("rocket") val rocket: Rocket,
     @SerializedName("launch_success") val launchSuccess: Boolean,
-    @SerializedName("links") val links: RocketImage
+    @SerializedName("links") val links: RocketLinks
 )

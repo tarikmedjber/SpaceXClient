@@ -25,5 +25,6 @@
     <string name="from_now">from now: %s</string>
     <string name="dash">-</string>
     <string name="plus">+</string>
+    <string name="link_to_open_title">Select link to open</string>
 
 </resources>
