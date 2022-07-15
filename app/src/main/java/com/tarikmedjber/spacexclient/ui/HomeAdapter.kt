@@ -39,8 +39,8 @@ class HomeAdapter(
         launchesList = launches
         notifyDataSetChanged()
     }
-}
 
+}
 
 class LaunchesViewHolder(
     private val binding: LaunchItemBinding,

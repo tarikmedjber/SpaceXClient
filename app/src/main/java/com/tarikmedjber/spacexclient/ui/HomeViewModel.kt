@@ -18,6 +18,7 @@ interface HomeViewModel {
 
     val launchesState: LiveData<State>
     var launchesList: List<Launches>?
-    fun getLaunches()
+    fun getLaunches(filteredOptions: FilteredOptions)
 
+    fun filterLaunchesList(filteredOptions: FilteredOptions, launches: List<Launches>)
 }

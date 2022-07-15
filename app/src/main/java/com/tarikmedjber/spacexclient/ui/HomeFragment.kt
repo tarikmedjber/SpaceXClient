@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -19,10 +20,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(),
     LaunchesViewHolder.OnLaunchListener {
-
-    interface Listener {
-        fun openLinks(position: Int)
-    }
 
     enum class SpaceXSection {
         COMPANY_INFO,
@@ -168,7 +165,7 @@ class HomeFragment : Fragment(),
 
 
     private fun getLaunches() {
-        homeViewModel.getLaunches()
+        homeViewModel.getLaunches(currentFiltersSelected())
     }
 
     private val launchesObserver =
@@ -230,27 +227,43 @@ class HomeFragment : Fragment(),
     }
 
     private fun setUpFilterSection() {
-        binding.filter.filterRadioGroup.setOnCheckedChangeListener { _, optionId ->
-            when (optionId) {
-                R.id.launch_date -> {
-                }
-                R.id.successful_launch -> {
-                }
+        binding.filter.filterRadioGroup.setOnCheckedChangeListener { _, _ ->
+            homeViewModel.launchesList?.let {
+                homeViewModel.filterLaunchesList(
+                    currentFiltersSelected(),
+                    it
+                )
             }
         }
 
-        binding.filter.sortRadioGroup.setOnCheckedChangeListener { _, optionId ->
-            when (optionId) {
-                R.id.ascending -> {
-                }
-                R.id.descending -> {
-                }
+        binding.filter.sortRadioGroup.setOnCheckedChangeListener { _, _ ->
+            homeViewModel.launchesList?.let {
+                homeViewModel.filterLaunchesList(
+                    currentFiltersSelected(),
+                    it
+                )
             }
-
         }
 
     }
 
+    private fun currentFiltersSelected(): FilteredOptions {
+
+        return if (binding.filter.launchDate.isChecked) {
+            if (binding.filter.ascending.isChecked) {
+                FilteredOptions.Date(OrderType.Ascending)
+            } else {
+                FilteredOptions.Date(OrderType.Descending)
+            }
+        } else {
+            // success is selected
+            if (binding.filter.ascending.isChecked) {
+                FilteredOptions.LaunchSuccess(OrderType.Ascending)
+            } else {
+                FilteredOptions.LaunchSuccess(OrderType.Descending)
+            }
+        }
+    }
 
     override fun onLaunchClicked(position: Int) {
         val links = homeViewModel.launchesList?.get(position)?.links
