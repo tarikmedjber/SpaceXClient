@@ -30,9 +30,10 @@ object DateTimeFormatter {
         return utc.dateTime()?.let { SimpleDateFormat("HH:mm:ss", Locale.UK).format(it) }
     }
 
-    fun getDaysSince(utc: String): Long {
-        val dateOfLaunch = utc.localDate()
-        return ChronoUnit.DAYS.between(dateOfLaunch, LocalDate.now())
+    fun getDaysSince(firstUTC: String, secondUTC: String? = null): Long {
+        val dateOfLaunch = firstUTC.localDate()
+        val dateNow = secondUTC?.localDate() ?: LocalDate.now()
+        return ChronoUnit.DAYS.between(dateOfLaunch, dateNow)
     }
 
 

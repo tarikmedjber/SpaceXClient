@@ -12,6 +12,8 @@ import com.tarikmedjber.spacexclient.engine.models.Launches
 import com.tarikmedjber.spacexclient.utils.DateTimeFormatter.getDate
 import com.tarikmedjber.spacexclient.utils.DateTimeFormatter.getDaysSince
 import com.tarikmedjber.spacexclient.utils.DateTimeFormatter.getTime
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 class HomeAdapter(
     private val listener: LaunchesViewHolder.OnLaunchListener,
@@ -52,7 +54,6 @@ class LaunchesViewHolder(
     }
 
     fun bind(launch: Launches, position: Int) {
-        // TODO -> days since/ from
 
         val date = getDate(launch.launchDate)
         val time = getTime(launch.launchDate)
@@ -66,9 +67,17 @@ class LaunchesViewHolder(
             launch.rocket.rocketName,
             launch.rocket.rocketType
         )
+
+        val daysSinceLaunchString: String = if (daysSinceLastLaunch > 0) {
+            context.getString(R.string.since, context.getString(R.string.plus))
+        } else {
+            context.getString(R.string.from_now, context.getString(R.string.dash))
+        }
+
         binding.daysText.text = context.getString(
             R.string.launch_days_from_since,
-            daysSinceLastLaunch.toString()
+            daysSinceLaunchString,
+            daysSinceLastLaunch.toString(),
         )
 
         Picasso

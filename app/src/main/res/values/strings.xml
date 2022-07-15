@@ -10,7 +10,6 @@
     <string name="company_info">%s was founded by  %s in  %d. It has now  %d employees,  %d launch sites, and is valued at USD  %s</string>
     <string name="company_info_error_text">Sorry, we can\'t load the company info at the moment</string>
     <string name="launches_error_text">Sorry, we can\'t load the launches list at the moment</string>
-
     <string name="try_again">Try Again</string>
     <string name="cancel">Cancel</string>
     <string name="refresh">Refresh</string>
@@ -20,6 +19,11 @@
     <string name="mission_info">Mission: %s</string>
     <string name="launch_date_time_info">Date/time: %s at %s</string>
     <string name="launch_rocket_info">Rocket: %s / %s</string>
-    <string name="launch_days_from_since">Days from now: + %s</string>
+    <string name="launch_days_from_since">Days %s %s</string>
     <string name="launch_success">Icon to show whether the launch was a success or not</string>
+    <string name="since">since: %s</string>
+    <string name="from_now">from now: %s</string>
+    <string name="dash">-</string>
+    <string name="plus">+</string>
+
 </resources>
