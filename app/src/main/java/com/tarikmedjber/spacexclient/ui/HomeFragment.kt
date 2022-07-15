@@ -268,8 +268,19 @@ class HomeFragment : Fragment(),
     override fun onLaunchClicked(position: Int) {
         val links = homeViewModel.launchesList?.get(position)?.links
         if (links != null) {
-            val linksList = arrayOf(links.articleLink, links.wikipediaLink, links.video_link)
-            openLinksDialog(linksList)
+            val linksList = mutableListOf<String>()
+            links.articleLink?.let {
+                linksList.add(it)
+            }
+            links.wikipediaLink?.let {
+                linksList.add(it)
+            }
+            links.video_link?.let {
+                linksList.add(it)
+            }
+            if (linksList.isNotEmpty()) {
+                openLinksDialog(linksList.toTypedArray())
+            }
         }
     }
 
