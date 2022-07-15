@@ -8,11 +8,14 @@
     <string name="company_title">Company</string>
     <string name="launches_title">Launches</string>
     <string name="company_info">%s was founded by  %s in  %d. It has now  %d employees,  %d launch sites, and is valued at USD  %s</string>
-    <string name="error_text">Sorry, we can\'t load the company info at the moment</string>
+    <string name="company_info_error_text">Sorry, we can\'t load the company info at the moment</string>
+    <string name="launches_error_text">Sorry, we can\'t load the launches list at the moment</string>
+
     <string name="try_again">Try Again</string>
     <string name="cancel">Cancel</string>
     <string name="refresh">Refresh</string>
     <string name="company_info_error_desc">Error icon to be shown when company info fails</string>
+    <string name="launches_error_desc">Error icon to be shown when the launches request fails</string>
     <string name="launch_image">Launch image</string>
     <string name="mission_info">Mission: %s</string>
     <string name="launch_date_time_info">Date/time: %s at %s</string>

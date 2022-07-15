@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:weightSum="3">
+    android:paddingVertical="@dimen/medium_space"
+    android:weightSum="4">
 
     <ImageView
         android:id="@+id/launch_image"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
@@ -16,9 +17,10 @@
         tools:src="@drawable/ic_error" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:orientation="vertical">
 
         <TextView
@@ -46,6 +48,7 @@
             android:text="@string/launch_days_from_since" />
     </LinearLayout>
 
+
     <ImageView
         android:id="@+id/success_icon"
         android:layout_width="wrap_content"
@@ -53,5 +56,7 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:contentDescription="@string/launch_success"
-        tools:src="@drawable/ic_error" />
+        android:scaleType="center"
+        tools:src="@drawable/ic_check" />
+
 </LinearLayout>

@@ -17,7 +17,7 @@ interface HomeViewModel {
     fun getCompanyInfo()
 
     val launchesState: LiveData<State>
-    var launches: Launches?
+    var launchesList: List<Launches>?
     fun getLaunches()
 
 }

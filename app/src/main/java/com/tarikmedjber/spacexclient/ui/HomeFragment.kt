@@ -2,20 +2,34 @@ package com.tarikmedjber.spacexclient.ui
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tarikmedjber.spacexclient.R
 import com.tarikmedjber.spacexclient.databinding.FragmentHomeBinding
 import com.tarikmedjber.spacexclient.utils.CurrencyFormatter.asCurrency
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+
+class HomeFragment : Fragment(),
+    LaunchesViewHolder.OnLaunchListener {
+
+    interface Listener {
+        fun openLinks(position: Int)
+    }
+
+    enum class SpaceXSection {
+        COMPANY_INFO,
+        LAUNCHES
+    }
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val homeViewModel by viewModel<HomeViewModelImpl>()
+    private var homeAdapter: HomeAdapter? = null
 
     companion object {
         fun newInstance() = HomeFragment()
@@ -37,13 +51,30 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        homeAdapter = context?.let {
+            HomeAdapter(this, it)
+        }
+        binding.launchesList.adapter = homeAdapter
+
         setUpFilterSection()
+
         binding.refreshCompanyInfo.setOnClickListener {
             getCompanyInfo()
         }
+
+        binding.refreshLaunches.setOnClickListener {
+            getLaunches()
+        }
+
         homeViewModel.companyInfoState.observe(
             viewLifecycleOwner,
             companyInfoObserver
+        )
+
+        homeViewModel.launchesState.observe(
+            viewLifecycleOwner,
+            launchesObserver
         )
     }
 
@@ -65,6 +96,12 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun setUpAdapter() {
+        homeViewModel.launchesList?.let {
+            homeAdapter?.setItems(it)
+        }
+    }
+
     private fun getCompanyInfo() {
         homeViewModel.getCompanyInfo()
     }
@@ -77,7 +114,7 @@ class HomeFragment : Fragment() {
                     binding.refreshCompanyInfo.visibility = View.GONE
                     binding.companyInfoText.visibility = View.GONE
                     binding.companyInfoProgressBar.visibility = View.GONE
-                    showErrorDialog()
+                    showErrorDialog(SpaceXSection.COMPANY_INFO)
                 }
                 HomeViewModel.State.Loading -> {
                     binding.companyInfoErrorIcon.visibility = View.GONE
@@ -114,16 +151,63 @@ class HomeFragment : Fragment() {
         )
     }
 
-    private fun showErrorDialog() {
+
+    private fun getLaunches() {
+        homeViewModel.getLaunches()
+    }
+
+    private val launchesObserver =
+        Observer<HomeViewModel.State> {
+            when (it) {
+                HomeViewModel.State.Error -> {
+                    binding.launchesListErrorIcon.visibility = View.VISIBLE
+                    binding.refreshLaunches.visibility = View.GONE
+                    binding.launchesList.visibility = View.GONE
+                    binding.launchesProgressBar.visibility = View.GONE
+                    showErrorDialog(SpaceXSection.LAUNCHES)
+                }
+                HomeViewModel.State.Loading -> {
+                    binding.launchesListErrorIcon.visibility = View.GONE
+                    binding.refreshLaunches.visibility = View.GONE
+                    binding.launchesProgressBar.visibility = View.VISIBLE
+                    binding.launchesList.visibility = View.GONE
+                }
+                is HomeViewModel.State.Success -> {
+                    binding.launchesListErrorIcon.visibility = View.GONE
+                    binding.refreshLaunches.visibility = View.GONE
+                    binding.launchesList.visibility = View.VISIBLE
+                    binding.launchesProgressBar.visibility = View.GONE
+                    setUpAdapter()
+                }
+            }
+        }
+
+    private fun showErrorDialog(spaceXSection: SpaceXSection) {
+        val message: String =
+            if (spaceXSection == SpaceXSection.COMPANY_INFO)
+                getString(R.string.company_info_error_text) else getString(
+                R.string.launches_error_text
+            )
         context?.let {
             MaterialAlertDialogBuilder(it)
-                .setMessage(getString(R.string.error_text))
+                .setMessage(message)
                 .setPositiveButton(getString(R.string.try_again)) { _, _ ->
-                    getCompanyInfo()
+                    when (spaceXSection) {
+                        SpaceXSection.COMPANY_INFO -> getCompanyInfo()
+                        SpaceXSection.LAUNCHES -> getLaunches()
+                    }
                 }
                 .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
-                    binding.refreshCompanyInfo.visibility = View.VISIBLE
-                    binding.companyInfoErrorIcon.visibility = View.GONE
+                    when (spaceXSection) {
+                        SpaceXSection.COMPANY_INFO -> {
+                            binding.refreshCompanyInfo.visibility = View.VISIBLE
+                            binding.companyInfoErrorIcon.visibility = View.GONE
+                        }
+                        SpaceXSection.LAUNCHES -> {
+                            binding.refreshLaunches.visibility = View.VISIBLE
+                            binding.launchesListErrorIcon.visibility = View.GONE
+                        }
+                    }
                     dialog.dismiss()
                 }
                 .show()
@@ -150,6 +234,10 @@ class HomeFragment : Fragment() {
 
         }
 
+    }
+
+    override fun onLaunchClicked(position: Int) {
+        // TODO -> open link
     }
 
 }

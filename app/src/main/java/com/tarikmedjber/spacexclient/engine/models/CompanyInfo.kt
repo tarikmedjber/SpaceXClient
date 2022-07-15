@@ -1,14 +1,12 @@
 package com.tarikmedjber.spacexclient.engine.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.google.gson.annotations.SerializedName
 
-@JsonClass(generateAdapter = true)
 data class CompanyInfo(
-    @Json(name = "name") val name: String,
-    @Json(name = "founder") val founder: String,
-    @Json(name = "founded") val founded: Int,
-    @Json(name = "employees") val employees: Int,
-    @Json(name = "launch_sites") val launchSites: Int,
-    @Json(name = "valuation") val valuation: Long
+    @SerializedName("name") val name: String,
+    @SerializedName("founder") val founder: String,
+    @SerializedName("founded") val founded: Int,
+    @SerializedName("employees") val employees: Int,
+    @SerializedName("launch_sites") val launchSites: Int,
+    @SerializedName("valuation") val valuation: Long
 )

@@ -1,13 +1,11 @@
 package com.tarikmedjber.spacexclient.engine.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.google.gson.annotations.SerializedName
 
-@JsonClass(generateAdapter = true)
 data class Launches(
-    @field:Json(name = "mission_name") val missionName: String,
-    @field:Json(name = "launch_date_utc") val launchDate: String,
-    @field:Json(name = "rocket") val rocket: Rocket,
-    @field:Json(name = "links") val links: RocketImage,
-    @field:Json(name = "launch_success") val launchSuccess: Boolean
+    @SerializedName("mission_name") val missionName: String,
+    @SerializedName("launch_date_utc") val launchDate: String,
+    @SerializedName("rocket") val rocket: Rocket,
+    @SerializedName("launch_success") val launchSuccess: Boolean,
+    @SerializedName("links") val links: RocketImage
 )

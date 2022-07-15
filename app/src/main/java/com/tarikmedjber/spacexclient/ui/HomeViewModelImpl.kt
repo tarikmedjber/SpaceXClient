@@ -12,15 +12,16 @@ import kotlinx.coroutines.launch
 class HomeViewModelImpl(private val spaceXRepository: SpaceXRepository) : ViewModel(),
     HomeViewModel {
 
-    init {
-        getCompanyInfo()
-    }
-
     override val companyInfoState = MutableLiveData<HomeViewModel.State>()
     override val launchesState = MutableLiveData<HomeViewModel.State>()
 
     override var companyInfo: CompanyInfo? = null
-    override var launches: Launches? = null
+    override var launchesList: List<Launches>? = null
+
+    init {
+        getCompanyInfo()
+        getLaunches()
+    }
 
     override fun getCompanyInfo() {
         viewModelScope.launch {
@@ -52,7 +53,12 @@ class HomeViewModelImpl(private val spaceXRepository: SpaceXRepository) : ViewMo
                         HomeViewModel.State.Loading
                     }
                     is RequestState.Success -> {
-                        HomeViewModel.State.Success
+                        if (launches.data.isEmpty()) {
+                            HomeViewModel.State.Error
+                        } else {
+                            launchesList = launches.data
+                            HomeViewModel.State.Success
+                        }
                     }
                 }
             }

@@ -1,11 +1,11 @@
 package com.tarikmedjber.spacexclient.engine.network
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tarikmedjber.spacexclient.BuildConfig.BASE_URL
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+
 
 object ApiBuilder {
 
@@ -13,21 +13,17 @@ object ApiBuilder {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(getHttpClient())
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(Api::class.java)
     }
 
     private fun getHttpClient(): OkHttpClient {
-        val okHttpBuilder = OkHttpClient.Builder()
-        okHttpBuilder.addInterceptor { chain ->
-            val requestWithUserAgent = chain.request().newBuilder().build()
-            chain.proceed(requestWithUserAgent)
+        val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
         }
-        return okHttpBuilder.build()
+        return OkHttpClient.Builder().apply {
+            addInterceptor(interceptor)
+        }.build()
     }
-
-    private val moshi: Moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
 }

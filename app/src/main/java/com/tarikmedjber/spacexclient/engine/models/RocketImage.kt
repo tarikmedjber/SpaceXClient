@@ -1,9 +1,7 @@
 package com.tarikmedjber.spacexclient.engine.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.google.gson.annotations.SerializedName
 
-@JsonClass(generateAdapter = true)
 data class RocketImage(
-    @field:Json(name = "mission_patch_small") val missionImage: String
+    @SerializedName("mission_patch_small") val missionImage: String
 )
