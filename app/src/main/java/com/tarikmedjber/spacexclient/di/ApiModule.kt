@@ -5,7 +5,7 @@ import org.koin.dsl.binds
 import org.koin.dsl.module
 
 val apiModule = module {
-    single { ApiBuilder.buildApi() } binds arrayOf(
+    single { ApiBuilder.buildApi(get()) } binds arrayOf(
         CompanyInfoService::class,
         LaunchesService::class
     )
