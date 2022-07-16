@@ -83,12 +83,4 @@ class HomeFragmentTest {
         }
         onView(withId(R.id.company_info_text)).check(matches(isDisplayed()))
     }
-
-    @Test
-    fun testLaunchesListIsDisplayedWhenSuccessError() {
-        scenario.onFragment { fragment ->
-            fragment.launchesObserver.onChanged(HomeViewModel.State.Success)
-        }
-        onView(withId(R.id.launches_list)).check(matches(isDisplayed()))
-    }
 }

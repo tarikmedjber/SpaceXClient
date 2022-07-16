@@ -4,15 +4,18 @@
     android:id="@+id/launch_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/item_selector"
     android:orientation="horizontal"
-    android:paddingVertical="@dimen/medium_space"
+    android:padding="@dimen/medium_space"
     android:weightSum="4">
+
 
     <ImageView
         android:id="@+id/launch_image"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/small_space"
         android:layout_weight="1"
         android:contentDescription="@string/launch_image"
         tools:src="@drawable/ic_error" />
