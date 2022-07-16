@@ -15,14 +15,14 @@ to filter the launches list ascending or descending based on the launch date or 
 launch was successful. You are also able to click on each Launch to view and choose 3 web links.
 
 ## Libraries Used
-Coroutines Library.
-Kotlin coroutine flows.
-Koin dependency injection.
-Retrofit to connect with web based APIs.
-Gson for json conversions.
-Picasso for image retrieval via url.
-Espresso Android UI Testing framework.
-MockK framework for unit testing.
+- Coroutines Library.
+- Kotlin coroutine flows.
+- Koin dependency injection.
+- Retrofit to connect with web based APIs.
+- Gson for json conversions.
+- Picasso for image retrieval via url.
+- Espresso Android UI Testing framework.
+- MockK framework for unit testing.
 
 ## Project structure
 - DI package
@@ -32,4 +32,3 @@ MockK framework for unit testing.
 
 ## API
 API used https://api.spacexdata.com/v3/.
-v3 had to be used as v4 and v5 did not seem to provide certain fields such as mission name.
